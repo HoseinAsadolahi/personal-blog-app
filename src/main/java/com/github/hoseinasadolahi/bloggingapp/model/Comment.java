@@ -12,6 +12,7 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@Table(name = "comments")
 public class Comment {
 
     @Id
@@ -20,6 +21,9 @@ public class Comment {
     private Long id;
 
     private String text;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Article article;
 
     @OneToOne(fetch = FetchType.EAGER)
     private User user;

@@ -19,6 +19,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Builder
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@Table(name = "articles")
 public class Article {
 
     @Id
@@ -32,14 +33,14 @@ public class Article {
 
     private Date publishedDate;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "article")
     @Cascade(CascadeType.REMOVE)
     private Set<Comment> comments;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "article_likes",
-            joinColumns = @JoinColumn(name = "id"),
-            inverseJoinColumns = @JoinColumn(name = "email"))
+            joinColumns = @JoinColumn(name = "article_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_email"))
     @Cascade(CascadeType.REMOVE)
     private Set<User> likes;
 
