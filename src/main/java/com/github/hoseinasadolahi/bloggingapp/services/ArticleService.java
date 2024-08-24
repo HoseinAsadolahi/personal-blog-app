@@ -23,4 +23,8 @@ public class ArticleService {
         }
         return articleRepository.findAllByOrderByPublishedDateDesc(pageable);
     }
+
+    public Article getArticleById(long id) {
+        return articleRepository.findById(id).orElse(new Article());
+    }
 }

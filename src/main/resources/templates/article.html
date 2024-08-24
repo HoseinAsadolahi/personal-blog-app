@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Article Details</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #212529;
+            color: #f8f9fa;
+        }
+
+        .container {
+            margin-top: 20px;
+        }
+
+        .article-title {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .article-content {
+            margin-top: 20px;
+        }
+
+        .btn {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="card bg-dark text-light">
+        <div class="card-body">
+            <h1 class="article-title" th:text="${article.title}"></h1>
+            <p class="text-muted">Published on <span
+                    th:text="${#dates.format(article.publishedDate, 'dd MMM yyyy')}"></span></p>
+            <div class="article-content">
+                <p th:text="${article.content}"></p>
+            </div>
+            <a href="/home" class="btn btn-primary">Back to Articles</a>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.4.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
