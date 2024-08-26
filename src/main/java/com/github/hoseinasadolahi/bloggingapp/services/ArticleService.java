@@ -27,4 +27,12 @@ public class ArticleService {
     public Article getArticleById(long id) {
         return articleRepository.findById(id).orElse(new Article());
     }
+
+    public Page<Article> getArticles(PageRequest of) {
+        return articleRepository.findAllByOrderByPublishedDateDesc(of);
+    }
+
+    public void saveArticle(Article article) {
+        articleRepository.save(article);
+    }
 }

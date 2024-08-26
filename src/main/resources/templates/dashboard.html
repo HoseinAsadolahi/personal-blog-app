@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/dashboard.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <h1 class="my-4">Admin Dashboard</h1>
+    <a href="/article/add" class="btn btn-success mb-3">Add New Article</a>
+
+    <table class="table table-dark table-bordered table-striped">
+        <thead>
+        <tr>
+            <th>Title</th>
+            <th>Published Date</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="article : ${articles}">
+            <td>
+                <a th:text="${article.title}" th:href="@{/article/{id}(id=${article.id})}" class="link"></a>
+            </td>
+            <td th:text="${#temporals.format(article.publishedDate, 'yyyy-MM-dd')}" class="text-bg-info"></td>
+            <td>
+                <a th:href="@{/article/update(id=${article.id})}" class="btn btn-warning btn-lg mb-3">Update</a>
+                <a th:action="@{/article/delete(id=${article.id})}"
+                   onclick="if (!(confirm('Are you sure you want to delete this employee?'))) return false"
+                   class="btn btn-danger btn-lg mb-3" th:method="delete">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="pagination">
+        <ul class="pagination">
+            <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled'">
+                <a class="page-link" href="#" th:href="@{/dashboard(page=${currentPage - 1})}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li class="page-item" th:each="pageNum : ${pageNumbers}"
+                th:classappend="${currentPage == pageNum} ? 'active'">
+                <a class="page-link" th:href="@{/dashboard(page=${pageNum})}" th:text="${pageNum}"></a>
+            </li>
+            <li class="page-item" th:classappend="${currentPage == totalPages} ? 'disabled'">
+                <a class="page-link" href="#" th:href="@{/dashboard(page=${currentPage + 1})}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>

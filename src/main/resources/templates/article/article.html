@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Article Details</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #212529;
+            color: #f8f9fa;
+        }
+
+        .container {
+            margin-top: 20px;
+        }
+
+        .article-title {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .article-content {
+            margin-top: 20px;
+        }
+
+        .btn {
+            margin-top: 20px;
+        }
+
+        .like-btn {
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        .comments-section {
+            margin-top: 40px;
+        }
+
+        .comment {
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #343a40;
+            border-radius: 5px;
+        }
+
+        .comment-author {
+            font-weight: bold;
+        }
+
+        .comment-text {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="card bg-dark text-light">
+        <div class="card-body">
+            <h1 class="article-title" th:text="${article.title}"></h1>
+            <p class="text-muted">Published on <span
+                    th:text="${#temporals.format(article.publishedDate, 'yyyy-MM-dd')}"></span></p>
+            <div class="article-content">
+                <p th:text="${article.content}"></p>
+            </div>
+
+            <!-- Like Button -->
+            <div class="d-flex align-items-center">
+                <form th:action="@{/articles/{id}/like(id=${article.id})}" method="post">
+                    <button type="submit" class="btn btn-primary like-btn">
+                        <span th:if="${liked}" class="text-success">Liked</span>
+                        <span th:if="${!liked}" class="text-white">Like</span>
+                    </button>
+                </form>
+                <span th:text="'Likes: ' + ${article.likes.size()}"></span>
+            </div>
+
+            <a href="/home" class="btn btn-secondary">Back to Articles</a>
+        </div>
+    </div>
+
+    <!-- Comments Section -->
+    <div class="comments-section">
+        <h2>Comments</h2>
+        <p th:if="${article.comments.size()}==0">Be the first one to comment here!</p>
+        <div th:each="comment : ${article.comments}">
+            <div class="comment">
+                <p class="comment-author" th:text="${comment.user.firstName + ' ' + comment.user.lastName}"></p>
+                <p class="comment-text" th:text="${comment.text}"></p>
+                <p class="text-muted" th:text="${#temporals.format(comment.createdAt, 'yyyy-MM-dd HH:mm')}"></p>
+            </div>
+        </div>
+
+        <!-- Comment Form -->
+        <form th:action="@{/articles/{id}/comments(id=${article.id})}" method="post">
+            <div class="form-group">
+                <label for="author">Name:</label>
+                <input type="text" class="form-control" id="author" name="author" required>
+            </div>
+            <div class="form-group">
+                <label for="comment">Comment:</label>
+                <textarea class="form-control" id="comment" name="text" rows="3" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit Comment</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

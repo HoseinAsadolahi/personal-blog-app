@@ -1,0 +1,37 @@
+body {
+    background-color: #121212;
+    color: #e5e5e5;
+    font-family: Arial, sans-serif;
+    font-size: 24px;
+}
+.container {
+    margin-top: 50px;
+    max-width: 1260px;
+    background-color: #1f1f1f;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+.table {
+    max-width: 1200px;
+}
+.table td {
+    max-width: 700px;
+    word-break: break-all;
+}
+.table th, .table td {
+    text-align: center;
+    vertical-align: middle;
+}
+.link {
+    color: white;
+    text-decoration: none;
+}
+
+.link:hover {
+    color: darkgray;
+}
+
+.link:active {
+    color: black;
+}

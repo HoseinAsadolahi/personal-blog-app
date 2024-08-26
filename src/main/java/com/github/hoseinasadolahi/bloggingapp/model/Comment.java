@@ -1,6 +1,7 @@
 package com.github.hoseinasadolahi.bloggingapp.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -16,10 +17,12 @@ import java.sql.Timestamp;
 public class Comment {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "comments_seq")
+    @SequenceGenerator(name = "comments_seq", allocationSize = 1)
     @EqualsAndHashCode.Include
     private Long id;
 
+    @NotBlank
     private String text;
 
     @ManyToOne(fetch = FetchType.LAZY)

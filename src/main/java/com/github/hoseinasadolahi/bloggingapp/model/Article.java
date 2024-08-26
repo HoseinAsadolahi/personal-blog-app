@@ -1,14 +1,17 @@
 package com.github.hoseinasadolahi.bloggingapp.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.validator.constraints.Length;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Set;
 
@@ -23,15 +26,19 @@ import java.util.Set;
 public class Article {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "articles_seq")
+    @SequenceGenerator(name = "articles_seq", allocationSize = 1)
     @EqualsAndHashCode.Include
     private long id;
 
+    @Length(min = 1, max = 50)
+    @NotBlank
     private String title;
 
+    @NotBlank
     private String content;
 
-    private Date publishedDate;
+    private LocalDate publishedDate;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "article")
     @Cascade(CascadeType.REMOVE)
