@@ -55,7 +55,7 @@
                 <li class="page-item" th:each="i : ${#numbers.sequence(0, articlePage.totalPages - 1)}"
                     th:classappend="${currentPage == i} ? 'active' : ''">
                     <a class="page-link" th:href="@{/home(sortBy=${sortBy},page=${i},size=${pageSize})}"
-                       th:text="${i + 1}">1</a>
+                       th:text="${i + 1}">10</a>
                 </li>
                 <li class="page-item" th:classappend="${articlePage.hasNext()} ? '': 'disabled'">
                     <a class="page-link" th:href="@{/home(sortBy=${sortBy},page=${currentPage + 1},size=${pageSize})}">Next</a>

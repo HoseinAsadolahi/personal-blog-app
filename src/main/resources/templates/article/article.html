@@ -6,53 +6,7 @@
     <title>Article Details</title>
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            background-color: #212529;
-            color: #f8f9fa;
-        }
-
-        .container {
-            margin-top: 20px;
-        }
-
-        .article-title {
-            font-size: 2rem;
-            font-weight: bold;
-        }
-
-        .article-content {
-            margin-top: 20px;
-        }
-
-        .btn {
-            margin-top: 20px;
-        }
-
-        .like-btn {
-            margin-right: 10px;
-            cursor: pointer;
-        }
-
-        .comments-section {
-            margin-top: 40px;
-        }
-
-        .comment {
-            margin-bottom: 20px;
-            padding: 10px;
-            background-color: #343a40;
-            border-radius: 5px;
-        }
-
-        .comment-author {
-            font-weight: bold;
-        }
-
-        .comment-text {
-            margin-top: 10px;
-        }
-    </style>
+    <link href="/css/article/article.css" rel="stylesheet">
 </head>
 <body>
 <div class="container">
@@ -67,7 +21,8 @@
 
             <!-- Like Button -->
             <div class="d-flex align-items-center">
-                <form th:action="@{/articles/{id}/like(id=${article.id})}" method="post">
+                <form th:action="@{/article/like}" method="post">
+                    <input type="hidden" th:value="${article.id}" id="id" name="id">
                     <button type="submit" class="btn btn-primary like-btn">
                         <span th:if="${liked}" class="text-success">Liked</span>
                         <span th:if="${!liked}" class="text-white">Like</span>

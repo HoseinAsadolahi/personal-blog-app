@@ -8,8 +8,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
 public class ArticleService {
@@ -25,7 +23,7 @@ public class ArticleService {
     }
 
     public Article getArticleById(long id) {
-        return articleRepository.findById(id).orElse(new Article());
+        return articleRepository.findById(id).orElse(null);
     }
 
     public Page<Article> getArticles(PageRequest of) {
@@ -33,6 +31,10 @@ public class ArticleService {
     }
 
     public void saveArticle(Article article) {
+        articleRepository.save(article);
+    }
+
+    public void updateArticle(Article article) {
         articleRepository.save(article);
     }
 }

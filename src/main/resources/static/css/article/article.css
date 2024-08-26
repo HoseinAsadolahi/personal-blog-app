@@ -1,0 +1,45 @@
+body {
+    background-color: #212529;
+    color: #f8f9fa;
+}
+
+.container {
+    margin-top: 20px;
+}
+
+.article-title {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.article-content {
+    margin-top: 20px;
+}
+
+.btn {
+    margin-top: 20px;
+}
+
+.like-btn {
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.comments-section {
+    margin-top: 40px;
+}
+
+.comment {
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: #343a40;
+    border-radius: 5px;
+}
+
+.comment-author {
+    font-weight: bold;
+}
+
+.comment-text {
+    margin-top: 10px;
+}

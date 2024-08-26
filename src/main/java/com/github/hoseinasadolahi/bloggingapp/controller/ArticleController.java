@@ -2,7 +2,9 @@ package com.github.hoseinasadolahi.bloggingapp.controller;
 
 import com.github.hoseinasadolahi.bloggingapp.model.Article;
 import com.github.hoseinasadolahi.bloggingapp.model.User;
+import com.github.hoseinasadolahi.bloggingapp.repository.ArticleRepository;
 import com.github.hoseinasadolahi.bloggingapp.services.ArticleService;
+import com.github.hoseinasadolahi.bloggingapp.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.data.domain.Page;
@@ -26,6 +28,8 @@ import java.util.stream.IntStream;
 public class ArticleController {
 
     private final ArticleService articleService;
+    private final UserService userService;
+
 
     @GetMapping({"", "/"})
     public String index() {
@@ -47,6 +51,9 @@ public class ArticleController {
     @GetMapping("/article/{id}")
     public String getArticle(@PathVariable("id") Long id, Authentication auth, Model model) {
         Article article = articleService.getArticleById(id);
+        if (article == null) {
+            return "/article/not-found";
+        }
         model.addAttribute("article", article);
         if (auth == null) {
             model.addAttribute("liked", false);
@@ -81,5 +88,18 @@ public class ArticleController {
         }
         articleService.saveArticle(article);
         return "redirect:/dashboard";
+    }
+
+    @PostMapping("/article/like")
+    public String like(@RequestParam("id") Long id, Authentication auth, Model model) {
+        Article article = articleService.getArticleById(id);
+        User user = userService.findByEmail(auth.getName());
+        if (article.getLikes() == null || !article.getLikes().contains(user)) {
+            article.like(user);
+        } else {
+            article.getLikes().remove(user);
+        }
+        articleService.updateArticle(article);
+        return "redirect:/article/" + article.getId();
     }
 }

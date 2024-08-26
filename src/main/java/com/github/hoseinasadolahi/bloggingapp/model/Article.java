@@ -13,6 +13,7 @@ import org.hibernate.validator.constraints.Length;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -40,15 +41,15 @@ public class Article {
 
     private LocalDate publishedDate;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "article")
-    @Cascade(CascadeType.REMOVE)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "article")
+    @Cascade({CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE})
     private Set<Comment> comments;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "article_likes",
             joinColumns = @JoinColumn(name = "article_id"),
             inverseJoinColumns = @JoinColumn(name = "user_email"))
-    @Cascade(CascadeType.REMOVE)
+    @Cascade({CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE})
     private Set<User> likes;
 
     @CreationTimestamp
@@ -57,4 +58,11 @@ public class Article {
 
     @UpdateTimestamp
     private Timestamp updatedAt;
+
+    public void like(User user) {
+        if (likes == null) {
+        likes = new HashSet<>();
+        }
+        likes.add(user);
+    }
 }
