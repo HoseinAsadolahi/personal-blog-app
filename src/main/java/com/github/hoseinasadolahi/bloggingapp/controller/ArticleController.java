@@ -1,6 +1,7 @@
 package com.github.hoseinasadolahi.bloggingapp.controller;
 
 import com.github.hoseinasadolahi.bloggingapp.model.Article;
+import com.github.hoseinasadolahi.bloggingapp.model.Comment;
 import com.github.hoseinasadolahi.bloggingapp.model.User;
 import com.github.hoseinasadolahi.bloggingapp.repository.ArticleRepository;
 import com.github.hoseinasadolahi.bloggingapp.services.ArticleService;
@@ -57,9 +58,11 @@ public class ArticleController {
         model.addAttribute("article", article);
         if (auth == null) {
             model.addAttribute("liked", false);
+            model.addAttribute("logged", false);
         } else {
             User user = User.builder().email(auth.getName()).build();
             model.addAttribute("liked", article.getLikes().contains(user));
+            model.addAttribute("logged", true);
         }
         return "article/article";
     }
@@ -71,7 +74,8 @@ public class ArticleController {
         model.addAttribute("articles", articlePage.getContent());
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", articlePage.getTotalPages());
-        model.addAttribute("pageNumbers", IntStream.rangeClosed(1, articlePage.getTotalPages()).boxed().collect(Collectors.toList()));
+        model.addAttribute("pageNumbers", IntStream.rangeClosed(1,
+                articlePage.getTotalPages()).boxed().collect(Collectors.toList()));
         return "dashboard";
     }
 
@@ -101,5 +105,33 @@ public class ArticleController {
         }
         articleService.updateArticle(article);
         return "redirect:/article/" + article.getId();
+    }
+
+    @PostMapping("/article/comment")
+    public String comment(@RequestParam("id") Long id,@RequestParam("text") String text,
+                          Authentication auth, Model model) {
+        Article article = articleService.getArticleById(id);
+        article.comment(Comment.builder().article(article).user(userService.findByEmail(auth.getName()))
+                .text(text).build());
+        articleService.updateArticle(article);
+        return "redirect:/article/" + article.getId();
+    }
+
+    @PostMapping("/article/delete")
+    public String delete(@RequestParam("id") Long id, Authentication auth, Model model) {
+        articleService.deleteArticle(id);
+        return "redirect:/dashboard";
+    }
+
+    @GetMapping("/article/update")
+    public String updateForm(@RequestParam("id") Long id, Model model) {
+        model.addAttribute("article", articleService.getArticleById(id));
+        return "/article/update";
+    }
+
+    @PostMapping("/article/update")
+    public String update(@Validated @ModelAttribute Article article, Model model) {
+        articleService.saveArticle(article);
+        return "redirect:/dashboard";
     }
 }

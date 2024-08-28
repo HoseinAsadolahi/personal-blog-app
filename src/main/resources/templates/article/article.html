@@ -43,22 +43,20 @@
             <div class="comment">
                 <p class="comment-author" th:text="${comment.user.firstName + ' ' + comment.user.lastName}"></p>
                 <p class="comment-text" th:text="${comment.text}"></p>
-                <p class="text-muted" th:text="${#temporals.format(comment.createdAt, 'yyyy-MM-dd HH:mm')}"></p>
+                <p class="text-muted" th:text="${#temporals.format(comment.createdAt.toLocalDateTime(), 'yyyy-MM-dd HH:mm')}"></p>
             </div>
         </div>
 
         <!-- Comment Form -->
-        <form th:action="@{/articles/{id}/comments(id=${article.id})}" method="post">
-            <div class="form-group">
-                <label for="author">Name:</label>
-                <input type="text" class="form-control" id="author" name="author" required>
-            </div>
+        <form th:if="${logged}" th:action="@{/article/comment}" method="post">
+            <input type="hidden" th:value="${article.id}" name="id">
             <div class="form-group">
                 <label for="comment">Comment:</label>
                 <textarea class="form-control" id="comment" name="text" rows="3" required></textarea>
             </div>
             <button type="submit" class="btn btn-primary">Submit Comment</button>
         </form>
+        <p th:if="${!logged}">You should <a th:href="@{/login}">sign in</a> to be able to comment!</p>
     </div>
 </div>
 </body>

@@ -65,4 +65,11 @@ public class Article {
         }
         likes.add(user);
     }
+
+    public void comment(Comment comment) {
+        if (comments == null) {
+            comments = new HashSet<>();
+        }
+        comments.add(comment);
+    }
 }

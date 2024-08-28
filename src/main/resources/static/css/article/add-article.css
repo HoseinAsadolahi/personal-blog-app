@@ -4,11 +4,11 @@ body {
     font-family: Arial, sans-serif;
 }
 .container {
-    scale: 1.5;
+    scale: 1.2;
     margin-top: 200px;
     max-width: 400px;
     background-color: #1f1f1f;
-    padding: 20px;
+    padding: 50px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }

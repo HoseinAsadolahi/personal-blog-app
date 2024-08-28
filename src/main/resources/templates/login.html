@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/css/login.css" >
+    <title>Login</title>
+</head>
+<body>
+<div class="form">
+    <form th:action="@{/login/process}" method="post">
+        <h2>Login</h2>
+        <h3 th:if="${param.error}" style="color: red">Invalid information!</h3>
+        <h3 th:if="${success}" style="color: green" th:text="${success}"></h3>
+        <div class="input">
+            <div class="inputbox">
+                <label>Email</label>
+                <input type="text" name="username" placeholder="example@gmail.com">
+            </div>
+            <div class="inputbox">
+                <label>Password</label>
+                <input type="password" name="password" placeholder="*****">
+            </div>
+            <div class="inputbox">
+                <input type="submit" value="Sign In">
+            </div>
+        </div>
+        <p style="color: white; padding-top: 25px">Don't have an account ? <a href="/signup" style="text-decoration: none; color: #1E7EE2">Sign up</a></p>
+    </form>
+</div>
+</body>
+</html>

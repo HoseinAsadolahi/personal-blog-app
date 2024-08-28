@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS comments
     user_email VARCHAR(255),
     article_id BIGINT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_email) REFERENCES users (email),
+    FOREIGN KEY (user_email) REFERENCES users (email) ON DELETE CASCADE,
     CONSTRAINT fk_article_comment
         FOREIGN KEY (article_id) REFERENCES articles (id) ON DELETE CASCADE
 );

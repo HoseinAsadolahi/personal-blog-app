@@ -1,8 +1,257 @@
-.link {
-    color: white;
-    text-decoration: none;
+.ag-format-container {
+    width: 1142px;
+    margin: 0 auto;
 }
 
-.link:hover {
-    color: darkgray;
+
+body {
+    background-color: #000;
+}
+.ag-courses_box {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: start;
+    -ms-flex-align: start;
+    align-items: flex-start;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+
+    padding: 50px 0;
+}
+.ag-courses_item {
+    height: 200px;
+    width: 1500px;
+    display: block;
+
+    margin: 0 15px 30px;
+
+    overflow: hidden;
+
+    border-radius: 28px;
+}
+.ag-courses-item_link {
+    display: block;
+    padding: 30px 20px;
+    background-color: #121212;
+    text-decoration: none;
+
+    overflow: hidden;
+
+    position: relative;
+}
+.ag-courses-item_link:hover,
+.ag-courses-item_link:hover .ag-courses-item_date {
+    text-decoration: none;
+    color: #FFF;
+}
+.ag-courses-item_link:hover .ag-courses-item_bg {
+    -webkit-transform: scale(30);
+    -ms-transform: scale(30);
+    transform: scale(30);
+}
+.ag-courses-item_title {
+    margin: 0 0 25px;
+
+    overflow: hidden;
+
+    font-weight: bold;
+    font-size: 30px;
+    color: #FFF;
+
+    z-index: 2;
+    position: relative;
+}
+.ag-courses-item_date-box {
+    font-size: 18px;
+    color: #FFF;
+
+    z-index: 2;
+    position: relative;
+}
+.ag-courses-item_date {
+    font-weight: bold;
+    color: #f9b234;
+
+    -webkit-transition: color 3s ease;
+    -o-transition: color 3s ease;
+    transition: color 3s ease
+}
+.ag-courses-item_bg {
+    height: 128px;
+    width: 128px;
+    background-color: #f9b234;
+
+    z-index: 1;
+    position: absolute;
+    top: -75px;
+    right: -75px;
+
+    border-radius: 50%;
+
+    -webkit-transition: all .5s ease;
+    -o-transition: all .5s ease;
+    transition: all .5s ease;
+}
+.ag-courses_item:nth-child(2n) .ag-courses-item_bg {
+    background-color: #3ecd5e;
+}
+.ag-courses_item:nth-child(3n) .ag-courses-item_bg {
+    background-color: #e44002;
+}
+.ag-courses_item:nth-child(4n) .ag-courses-item_bg {
+    background-color: #952aff;
+}
+.ag-courses_item:nth-child(5n) .ag-courses-item_bg {
+    background-color: #cd3e94;
+}
+.ag-courses_item:nth-child(6n) .ag-courses-item_bg {
+    background-color: #4c49ea;
+}
+
+
+
+@media only screen and (max-width: 979px) {
+    .ag-courses_item {
+        -ms-flex-preferred-size: calc(50% - 30px);
+        flex-basis: calc(50% - 30px);
+    }
+    .ag-courses-item_title {
+        font-size: 24px;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .ag-format-container {
+        width: 96%;
+    }
+
+}
+@media only screen and (max-width: 639px) {
+    .ag-courses_item {
+        -ms-flex-preferred-size: 100%;
+        flex-basis: 100%;
+    }
+    .ag-courses-item_title {
+        min-height: 72px;
+        line-height: 1;
+
+        font-size: 24px;
+    }
+    .ag-courses-item_link {
+        padding: 22px 40px;
+        text-decoration: none;
+    }
+    .ag-courses-item_date-box {
+        font-size: 16px;
+    }
+}
+.page{
+    list-style: none;
+    display: inline-block;
+    padding: 0;
+    margin-top: 10px;
+    li{
+        display: inline;
+        text-align: center;
+    }
+    a{
+        float: left;
+        display: block;
+        font-size: 14px;
+        text-decoration: none;
+        padding: 5px 12px;
+        color:#fff;
+        margin-left: -1px;
+        border:1px solid transparent;
+        line-height: 1.5;
+        &.active{  cursor: default;}
+        &:active{ outline: none;}
+    }
+}
+.modal-5{
+    position: relative;
+    &:after{
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 35px;
+        left:0;
+        bottom:0;
+        z-index: -1;
+        @include background-image(linear-gradient( left, rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 40% ,rgba(0,0,0,0.65) 50%,rgba(0,0,0,0.65) 60%,rgba(0,0,0,0) 100%));
+    }
+
+    a{
+        color:#666;
+        padding:13px 5px 5px;
+        margin: 0 10px;
+        position: relative;
+        &:hover{
+            color: #fff;
+            &:after{
+                content: '';
+                position: absolute;
+                width: 24px;
+                height: 24px;
+                background:#1E7EE2;
+                @include border-radius(100%);
+                z-index: -1;
+                left: -3px;
+                bottom: 4px;
+                margin: auto;
+            }
+        }
+        &.next , &.prev{
+            color:#1E7EE2;
+            &:hover{
+                color:#fff;
+                &:after{display: none;}
+            }
+        }
+        &.active {
+            background:#1E7EE2;
+            color:#fff;
+            &:before{
+                content: '';
+                position: absolute;
+                top:-11px;
+                left:-10px;
+                width: 18px;
+                border:10px solid transparent;
+                border-bottom:7px solid #104477;
+                z-index: -1;
+            }
+            &:hover{
+                &:after{display: none;}
+            }
+        }
+
+    }
+}
+
+.select {
+    background-color: #2b2b2b;  /* Dark background */
+    color: #ffffff;              /* White text color */
+    border: 1px solid #555;      /* Subtle border */
+    padding: 8px 12px;           /* Padding for spacing */
+    border-radius: 5px;          /* Rounded corners */
+    font-size: 16px;             /* Font size */
+    appearance: none;            /* Remove default arrow */
+    cursor: pointer;             /* Pointer cursor */
+}
+
+.select:hover {
+    background-color: #333;      /* Slightly lighter on hover */
+}
+
+.select:focus {
+    outline: none;               /* Remove default focus outline */
+    border-color: #777;          /* Highlight border on focus */
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.2); /* Add subtle glow on focus */
+}
+
+.select option {
+    background-color: #2b2b2b;  /* Keep option background consistent */
+    color: #ffffff;              /* White text for options */
 }

@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Blog Home</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href="/css/index.css" rel="stylesheet">
 </head>
 <body class="bg-dark text-light">
@@ -12,7 +12,7 @@
         <h1 class="text-light">Articles</h1>
         <div>
             <label for="sort" class="form-label text-light">Sort by:</label>
-            <select id="sort" class="form-select"
+            <select id="sort" class="select"
                     onchange="window.location.href='/home?sortBy=' + this.value + '&page=0'">
                 <option value="publishedDate" th:selected="${sortBy == 'publishedDate'}">Published Date</option>
                 <option value="likes" th:selected="${sortBy == 'likes'}">Likes</option>
@@ -20,51 +20,48 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-12" th:each="article : ${articlePage.getContent()}">
-            <div class="card mb-3 bg-secondary text-light">
-                <div class="card-body">
-                    <a th:href="@{/article/{id}(id=${article.id})}" class="link"><h4 class="card-title" th:text="${article.title}" ></h4></a>
-                    <p class="card-text" th:text="${#strings.length(article.content) > 30 ? #strings.substring(article.content, 0, 30) + ' ...' : article.content}">Article content goes here...</p>
-                    <p class="card-text">
-                        <small class="text-muted">Published on:
-                            <span th:text="${#temporals.format(article.publishedDate, 'yyyy-MM-dd')}"></span>
-                        </small>
-                    </p>
-                    <p class="card-text">
-                        <small class="text-muted">Likes:
+    <div class="ag-format-container">
+        <div class="ag-courses_box">
+            <div class="ag-courses_item" th:each="article : ${articlePage.content}">
+                <a th:href="@{/article/{id}(id=${article.id})}" class="ag-courses-item_link">
+                    <div class="ag-courses-item_bg"></div>
+
+                    <div class="ag-courses-item_title" th:text="${article.title}"></div>
+
+                    <p class="ag-courses-item_title">
+                        <small class="text-light">Likes:
                             <span th:text="${article.likes.size()}">0</span>
                         </small>
                     </p>
-                    <p class="card-text">
-                        <small class="text-muted">Comments:
-                            <span th:text="${article.comments.size()}">0</span>
-                        </small>
-                    </p>
-                </div>
+
+                    <div class="ag-courses-item_date-box">
+                        Published on:
+                        <span class="ag-courses-item_date" th:text="${#temporals.format(article.publishedDate, 'yyyy-MM-dd')}">04.11.2022</span>
+                    </div>
+                </a>
             </div>
         </div>
     </div>
 
     <div class="d-flex justify-content-center mt-4">
         <nav aria-label="Page navigation">
-            <ul class="pagination">
-                <li class="page-item" th:classappend="${articlePage.hasPrevious()} ? '': 'disabled'">
-                    <a class="page-link" th:href="@{/home(sortBy=${sortBy}, page=${currentPage - 1},size=${pageSize})}">Previous</a>
+            <ul class="page modal-5">
+                <li th:classappend="${articlePage.hasPrevious()} ? '': 'disabled'">
+                    <a th:href="@{/home(sortBy=${sortBy}, page=${currentPage - 1},size=${pageSize})}">Previous</a>
                 </li>
-                <li class="page-item" th:each="i : ${#numbers.sequence(0, articlePage.totalPages - 1)}"
+                <li th:each="i : ${#numbers.sequence(0, articlePage.totalPages - 1)}"
                     th:classappend="${currentPage == i} ? 'active' : ''">
-                    <a class="page-link" th:href="@{/home(sortBy=${sortBy},page=${i},size=${pageSize})}"
+                    <a th:href="@{/home(sortBy=${sortBy},page=${i},size=${pageSize})}"
                        th:text="${i + 1}">10</a>
                 </li>
-                <li class="page-item" th:classappend="${articlePage.hasNext()} ? '': 'disabled'">
-                    <a class="page-link" th:href="@{/home(sortBy=${sortBy},page=${currentPage + 1},size=${pageSize})}">Next</a>
+                <li th:classappend="${articlePage.hasNext()} ? '': 'disabled'">
+                    <a th:href="@{/home(sortBy=${sortBy},page=${currentPage + 1},size=${pageSize})}">Next</a>
                 </li>
             </ul>
         </nav>
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

@@ -21,9 +21,10 @@ public class ProjectSecurityConfiguration {
     @Bean
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(req -> req.
-                requestMatchers("/dashboard", "/article/add", "/article/update/**", "/article/delete", "article/like").authenticated().
-                anyRequest().permitAll());
-        http.formLogin(withDefaults());
+                requestMatchers("/dashboard", "/article/add", "/article/update/**", "/article/delete").hasRole("ADMIN")
+                .requestMatchers("/article/like", "/article/comment").hasAnyRole("ADMIN", "USER")
+                .anyRequest().permitAll());
+        http.formLogin(form -> form.loginPage("/login").loginProcessingUrl("/login/process").permitAll());
         http.httpBasic(withDefaults());
         return http.build();
     }

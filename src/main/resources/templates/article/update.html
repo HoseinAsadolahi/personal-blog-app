@@ -1,49 +1,34 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add New Article</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="/css/article/add-article.css" rel="stylesheet">
-    <style>
-        body {
-            background-color: #212529;
-            color: #f8f9fa;
-        }
-        .container {
-            margin-top: 20px;
-            max-width: 600px;
-        }
-        .form-group label {
-            color: #f8f9fa;
-        }
-        .btn-primary {
-            margin-top: 20px;
-        }
-    </style>
 </head>
 <body>
 <div class="container">
     <h1 class="my-4">Add New Article</h1>
-    <form th:action="@{/article/add}" th:object="${article}" th:method="post">
+    <form th:action="@{/article/update}" th:object="${article}" th:method="post">
+        <input type="hidden" th:value="${article.id}" id="id" name="id">
         <div class="form-group">
             <label for="title">Title</label>
-            <input type="text" class="form-control" id="title" th:field="*{title}" name="title" placeholder="Enter title" required>
+            <input type="text" class="form-control" id="title" th:field="*{title}" th:value="${article.title}" name="title" placeholder="Enter title" required>
             <span th:if="${#fields.hasErrors('title')}"
                   th:errors="*{title}"
                   class="text-bg-danger"></span>
         </div>
         <div class="form-group">
             <label for="content">Content</label>
-            <textarea class="form-control" id="content" name="content" th:field="*{content}" rows="5" placeholder="Enter content" required></textarea>
+            <textarea class="form-control" id="content" name="content" th:field="*{content}" th:value="${article.content}" rows="5" placeholder="Enter content" required></textarea>
         </div>
         <div class="form-group">
             <label for="publishedDate">Publish Date</label>
-            <input type="date" class="form-control" id="publishedDate" th:field="*{publishedDate}" name="publishedDate" required>
+            <input type="date" class="form-control" id="publishedDate" th:field="*{publishedDate}" th:value="${article.publishedDate}" name="publishedDate" required>
         </div>
-        <button type="submit" class="btn btn-primary">Add Article</button>
-        <a href="/dashboard" class="btn btn-primary">Cancel</a>
+        <button type="submit" class="btn btn-primary">Update Article</button>
+        <a href="/dashboard" class="btn btn-secondary">Cancel</a>
     </form>
 </div>
 

@@ -29,30 +29,35 @@
             <td th:text="${#temporals.format(article.publishedDate, 'yyyy-MM-dd')}" class="text-bg-info"></td>
             <td>
                 <a th:href="@{/article/update(id=${article.id})}" class="btn btn-warning btn-lg mb-3">Update</a>
-                <a th:action="@{/article/delete(id=${article.id})}"
-                   onclick="if (!(confirm('Are you sure you want to delete this employee?'))) return false"
-                   class="btn btn-danger btn-lg mb-3" th:method="delete">Delete</a>
+                <form th:action="@{/article/delete}" method="post" style="display: inline;">
+                    <input type="hidden" th:value="${article.id}" id="id" name="id" style="display: inline;">
+                    <button type="submit" class="btn btn-danger btn-lg mb-3" onclick="if (!(confirm('Are you sure you want to delete this employee?'))) return false">
+                        Delete
+                    </button>
+                </form>
             </td>
         </tr>
         </tbody>
     </table>
-    <div class="pagination">
-        <ul class="pagination">
-            <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled'">
-                <a class="page-link" href="#" th:href="@{/dashboard(page=${currentPage - 1})}" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                </a>
-            </li>
-            <li class="page-item" th:each="pageNum : ${pageNumbers}"
-                th:classappend="${currentPage == pageNum} ? 'active'">
-                <a class="page-link" th:href="@{/dashboard(page=${pageNum})}" th:text="${pageNum}"></a>
-            </li>
-            <li class="page-item" th:classappend="${currentPage == totalPages} ? 'disabled'">
-                <a class="page-link" href="#" th:href="@{/dashboard(page=${currentPage + 1})}" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                </a>
-            </li>
-        </ul>
+    <div class="d-flex justify-content-center mt-4">
+        <nav aria-label="Page navigation">
+            <ul class="page modal-5">
+                <li th:classappend="${currentPage == 1} ? 'disabled'">
+                    <a href="#" th:href="@{/dashboard(page=${currentPage - 1})}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li th:each="pageNum : ${pageNumbers}"
+                    th:classappend="${currentPage == pageNum} ? 'active'">
+                    <a th:href="@{/dashboard(page=${pageNum})}" th:text="${pageNum}"></a>
+                </li>
+                <li th:classappend="${currentPage == totalPages} ? 'disabled'">
+                    <a href="#" th:href="@{/dashboard(page=${currentPage + 1})}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
     </div>
 </div>
 </body>
